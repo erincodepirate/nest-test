@@ -1,9 +1,11 @@
-import { Controller, Delete, Get, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { Controller, Delete, Get, Header, HttpCode, Post, Put, Query, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Controller('products')
 export class ProductsController {
     @Post()
+    //@HttpCode(204)
+    //@Header('Authorization', 'Bearer XXXXXXXXX')
     create():string {
         return 'product created';
     }
