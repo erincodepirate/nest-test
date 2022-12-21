@@ -1,8 +1,13 @@
-import { Controller, Get, Query, Req, Res } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put, Query, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Controller('products')
 export class ProductsController {
+    @Post()
+    create():string {
+        return 'product created';
+    }
+
     @Get()
     findAll(
         //@Req() request: Request,
@@ -13,5 +18,25 @@ export class ProductsController {
         //console.log(response);
         //console.log(query);
         return 'Find all';
+    }
+
+    @Put(':id')
+    update(): string {
+        return 'update product';
+    }
+
+    @Delete(':id')
+    del(): string {
+        return 'product deleted';
+    }
+
+    @Get('ab*cd')
+    pattern(): string {
+        return 'pattern matched';
+    }
+
+    @Get(':id')
+    findOne(): string {
+        return 'find one';
     }
 }
