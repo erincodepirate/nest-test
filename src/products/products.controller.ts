@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Header, HttpCode, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Put, Query, Req, Res } from '@nestjs/common';
 import { CreateProductDTO } from 'dto/create-product.dto';
 import { Request, Response } from 'express';
 import { Product } from 'src/services/product.interface';
@@ -18,15 +18,15 @@ export class ProductsController {
     }
 
     @Get()
-    findAll(
+    async findAll(
         //@Req() request: Request,
         //@Res() response: Response,
         //@Query() query
-    ): string {
+    ): Promise<Product[]> {
         //console.log(request);
         //console.log(response);
         //console.log(query);
-        return 'Find all';
+        return this.productService.findAll();
     }
 
     @Put(':id')
@@ -35,8 +35,8 @@ export class ProductsController {
     }
 
     @Delete(':id')
-    del(): string {
-        return 'product deleted';
+    del(@Param() params): Promise<Product[]> {
+        return this.productService.delete(params.id);
     }
 
     @Get('ab*cd')
@@ -45,7 +45,7 @@ export class ProductsController {
     }
 
     @Get(':id')
-    findOne(): string {
-        return 'find one';
+    async findOne(@Param() params): Promise<Product> {
+        return this.productService.findOne(params.id);
     }
 }
