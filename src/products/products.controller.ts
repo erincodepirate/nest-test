@@ -1,5 +1,7 @@
-import { Controller, Delete, Get, Header, HttpCode, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Header, HttpCode, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { CreateProductDTO } from 'dto/create-product.dto';
 import { Request, Response } from 'express';
+import { Product } from 'src/services/product.interface';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -11,13 +13,8 @@ export class ProductsController {
     @Post()
     //@HttpCode(204)
     //@Header('Authorization', 'Bearer XXXXXXXXX')
-    create() {
-        return this.productService.create({
-            id: '1',
-            name: 'Macbook Pro',
-            qty: 1,
-            price: 100
-        });
+    async create(@Body() product: CreateProductDTO) : Promise<Product[]> {
+        return this.productService.create(product);
     }
 
     @Get()
