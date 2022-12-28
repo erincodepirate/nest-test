@@ -1,13 +1,23 @@
 import { Controller, Delete, Get, Header, HttpCode, Post, Put, Query, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
+    constructor(private productService: ProductsService) {
+
+    }
+
     @Post()
     //@HttpCode(204)
     //@Header('Authorization', 'Bearer XXXXXXXXX')
-    create():string {
-        return 'product created';
+    create() {
+        return this.productService.create({
+            id: '1',
+            name: 'Macbook Pro',
+            qty: 1,
+            price: 100
+        });
     }
 
     @Get()
