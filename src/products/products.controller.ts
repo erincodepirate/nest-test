@@ -10,9 +10,9 @@ export class ProductsController {
 
     }
 
-    @Post()
     //@HttpCode(204)
     //@Header('Authorization', 'Bearer XXXXXXXXX')
+    @Post()
     async create(@Body() product: CreateProductDTO) : Promise<Product[]> {
         return this.productService.create(product);
     }
