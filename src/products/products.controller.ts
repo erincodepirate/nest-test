@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Header, HttpCode, Param, Post, Put, Query, Req, Res, UseFilters } from '@nestjs/common';
 import { CreateProductDTO } from 'dto/create-product.dto';
 import { Request, Response } from 'express';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { Product } from 'src/services/product.interface';
 import { ProductsService } from './products.service';
 
 @Controller('products')
+@UseFilters(HttpExceptionFilter)
 export class ProductsController {
     constructor(private productService: ProductsService) {
 
