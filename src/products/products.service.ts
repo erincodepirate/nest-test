@@ -46,7 +46,14 @@ export class ProductsService {
         return await this.productRepository.delete(id);
     }
 
-    async update(id: number, recordToUpdate: UpdateProduct): Promise<UpdateResult> {
-        return await this.productRepository.update(id, recordToUpdate);
+    async update(id: number, recordToUpdate: UpdateProduct): Promise<Product> {
+        //return await this.productRepository.update(id, recordToUpdate);
+        const product = await this.productRepository.findOneBy({id:id});
+
+        if (!product){
+            throw new NotFoundException("Product not found");
+        }
+        await this.productRepository.merge(product, recordToUpdate);
+        return await this.productRepository.save(product);
     }
 }

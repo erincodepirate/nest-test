@@ -38,7 +38,7 @@ export class ProductsController {
     }
 
     @Put(':id')
-    async update(@Param('id') id, @Body() recordToUpdate: UpdateProductDTO): Promise<UpdateResult> {
+    async update(@Param('id') id, @Body() recordToUpdate: UpdateProductDTO): Promise<Product> {
         return await this.productService.update(+id, recordToUpdate);
     }
 
