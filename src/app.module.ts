@@ -16,7 +16,7 @@ import { DataSource } from 'typeorm';
       username: 'root',
       password: 'root',
       database: 'nest-db',
-      entities: [__dirname + '**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true
     })],
   controllers: [AppController],

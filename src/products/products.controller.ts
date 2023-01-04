@@ -17,8 +17,8 @@ export class ProductsController {
     //@HttpCode(204)
     //@Header('Authorization', 'Bearer XXXXXXXXX')
     @Post()
-    async create(@Body() product: CreateProductDTO) : Promise<Product[]> {
-        return this.productService.create(product);
+    async create(@Body() product: CreateProductDTO) : Promise<Product> {
+        return await this.productService.create(product);
     }
 
     @Get()
@@ -30,7 +30,7 @@ export class ProductsController {
         //console.log(request);
         //console.log(response);
         //console.log(query);
-        return this.productService.findAll();
+        return await this.productService.findAll();
     }
 
     @Put(':id')
@@ -49,7 +49,7 @@ export class ProductsController {
     }
 
     @Get(':id')
-    async findOne(@Param() params): Promise<Product> {
-        return this.productService.findOne(params.id);
+    async findOne(@Param('id') id): Promise<Product> {
+        return await this.productService.findOne(id);
     }
 }

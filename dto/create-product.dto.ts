@@ -1,9 +1,9 @@
 import { IsInt, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateProductDTO {
-    @IsNotEmpty()
+   /* @IsNotEmpty()
     @IsString()
-    readonly id: string;
+    readonly id: string;*/
 
     @IsNotEmpty()
     @IsString()
