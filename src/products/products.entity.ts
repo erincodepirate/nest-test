@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { ProductDetailsEntity } from './product-details.entity';
 
 @Entity({name: 'products'})
 export class ProductsEntity {
@@ -13,4 +14,8 @@ export class ProductsEntity {
 
     @Column()
     price: number;
+
+    @OneToOne(type => ProductDetailsEntity)
+    @JoinColumn()
+    productEntity: ProductDetailsEntity
 }
