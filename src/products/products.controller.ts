@@ -5,6 +5,10 @@ import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { TransformInterceptor } from 'src/common/interceptors/transform/transform.interceptor';
 import { Product } from 'src/services/product.interface';
 import { ProductsService } from './products.service';
+import { DeleteResult, UpdateResult } from 'typeorm';
+import { identity } from 'rxjs';
+import { UpdateProductDTO } from 'dto/update-product.dto';
+
 
 @Controller('products')
 @UseFilters(HttpExceptionFilter)
@@ -34,13 +38,13 @@ export class ProductsController {
     }
 
     @Put(':id')
-    update(): string {
-        return 'update product';
+    async update(@Param('id') id, @Body() recordToUpdate: UpdateProductDTO): Promise<UpdateResult> {
+        return await this.productService.update(+id, recordToUpdate);
     }
 
     @Delete(':id')
-    async del(@Param() params): Promise<Product[]> {
-        return this.productService.delete(params.id);
+    async del(@Param('id') id): Promise<DeleteResult> {
+        return await this.productService.delete(+id);
     }
 
     @Get('ab*cd')
@@ -50,6 +54,6 @@ export class ProductsController {
 
     @Get(':id')
     async findOne(@Param('id') id): Promise<Product> {
-        return await this.productService.findOne(id);
+        return await this.productService.findOne(+id);
     }
 }

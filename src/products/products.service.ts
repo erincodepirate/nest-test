@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Product } from 'src/services/product.interface';
+import { Product, UpdateProduct } from 'src/services/product.interface';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository, DeleteResult, UpdateResult } from 'typeorm';
 import { ProductsEntity } from './products.entity';
 import { CreateProductDTO } from 'dto/create-product.dto';
 
@@ -39,10 +39,14 @@ export class ProductsService {
         }
         return results;
     }
-    delete(id: number): Product[] {
-        const index = this.products.findIndex(p => p.id === id);
+    async delete(id: number): Promise<DeleteResult> {
+        /*const index = this.products.findIndex(p => p.id === id);
         this.products.splice(index, 1);
-        return this.products;
-        //return this.productRepository.delete
+        return this.products;*/
+        return await this.productRepository.delete(id);
+    }
+
+    async update(id: number, recordToUpdate: UpdateProduct): Promise<UpdateResult> {
+        return await this.productRepository.update(id, recordToUpdate);
     }
 }
