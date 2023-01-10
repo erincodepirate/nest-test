@@ -17,5 +17,5 @@ export class ProductsEntity {
 
     @OneToOne(type => ProductDetailsEntity)
     @JoinColumn()
-    productEntity: ProductDetailsEntity
+    productDetails: ProductDetailsEntity
 }

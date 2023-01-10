@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from "class-validator";
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateProductDTO {
    /* @IsNotEmpty()
@@ -16,4 +16,24 @@ export class CreateProductDTO {
     @IsNotEmpty()
     @IsInt()
     readonly price: number;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly partNumber: string;
+
+    @IsOptional()
+    @IsString()
+    dimension: string;
+
+    @IsOptional()
+    @IsInt()
+    weight: number;
+
+    @IsOptional()
+    @IsString()
+    manufacturer: string;
+
+    @IsOptional()
+    @IsString()
+    origin: string;
 }
