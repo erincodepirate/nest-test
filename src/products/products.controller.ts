@@ -42,9 +42,9 @@ export class ProductsController {
         return await this.productService.update(+id, recordToUpdate);
     }
 
-    @Delete(':id')
-    async del(@Param('id') id): Promise<DeleteResult> {
-        return await this.productService.delete(+id);
+    @Delete(':productId/:detailsId')
+    async del(@Param() params): Promise<DeleteResult> {
+        return await this.productService.delete(+params.productId, params.detailsId);
     }
 
     @Get('ab*cd')

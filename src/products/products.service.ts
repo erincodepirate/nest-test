@@ -60,21 +60,43 @@ export class ProductsService {
         }
         return results;
     }
-    async delete(id: number): Promise<DeleteResult> {
+    async delete(productId: number, productDetailsId: number): Promise<any> {
         /*const index = this.products.findIndex(p => p.id === id);
         this.products.splice(index, 1);
         return this.products;*/
-        return await this.productRepository.delete(id);
+        await Promise.all([
+            await this.productRepository.delete(productId),
+            await this.productDetailsRepository.delete(productDetailsId)
+        ])
+        //return await this.productRepository.delete(id);
+        return {msg: `product is deleted with id ${productId} and details ${productDetailsId}`};
     }
 
     async update(id: number, recordToUpdate: UpdateProduct): Promise<Product> {
         //return await this.productRepository.update(id, recordToUpdate);
-        const product = await this.productRepository.findOneBy({id:id});
+        const product = await this.productRepository.findOne({where:{id:id}, relations:['productDetails']});
 
         if (!product){
             throw new NotFoundException("Product not found");
         }
-        await this.productRepository.merge(product, recordToUpdate);
-        return await this.productRepository.save(product);
+        const {qty, price, name} = recordToUpdate
+        await this.productRepository.merge(product, {
+            qty,
+            name,
+            price
+        });
+        const updatedProduct = await this.productRepository.save(product);
+        const foundDetails = await this.productDetailsRepository.findOne({where: {id: product.productDetails.id}});
+
+        const {dimension, weight, origin, manufacturer, partNumber} = recordToUpdate; 
+        await this.productDetailsRepository.merge(foundDetails, {
+            dimension, 
+            weight, 
+            origin, 
+            manufacturer, 
+            partNumber
+        });
+        const updatedDetails = await this.productDetailsRepository.save(foundDetails);
+        return {...updatedProduct, productDetails: updatedDetails};
     }
 }
