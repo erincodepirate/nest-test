@@ -6,6 +6,8 @@ import { ProductsController } from './products/products.controller';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { UsersModule } from './users/users.module';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   imports: [ProductsModule,
@@ -18,7 +20,9 @@ import { DataSource } from 'typeorm';
       database: 'nest-db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true
-    })],
+    }),
+    UsersModule,
+    PhotosModule],
   controllers: [AppController],
   providers: [AppService],
 })
