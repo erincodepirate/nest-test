@@ -10,7 +10,7 @@ import { UsersModule } from './users/users.module';
 import { PhotosModule } from './photos/photos.module';
 
 @Module({
-  imports: [ProductsModule,
+  imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -21,6 +21,7 @@ import { PhotosModule } from './photos/photos.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true
     }),
+    ProductsModule,
     UsersModule,
     PhotosModule],
   controllers: [AppController],

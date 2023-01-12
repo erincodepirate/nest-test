@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { UserEntity } from 'src/users/users.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity({name: 'photos'})
 export class PhotosEntity {
@@ -7,4 +8,9 @@ export class PhotosEntity {
 
     @Column()
     url: string;
+
+    @ManyToOne(type => UserEntity, userEntity => userEntity.photos, {
+        onDelete: 'CASCADE'
+    })
+    user: UserEntity
 }
